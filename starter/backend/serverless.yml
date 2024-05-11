@@ -20,6 +20,15 @@ provider:
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
     TODO_ATTACHMENTS_S3_BUCKET: todo-attachments-bucket-trungvq8-${self:provider.stage}
 
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Scan
+            - dynamodb:PutItem
+            - dynamodb:GetItem
+          Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 functions:
   Auth:
     handler: src/lambda/auth/auth0Authorizer.handler
