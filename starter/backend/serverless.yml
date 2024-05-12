@@ -19,6 +19,7 @@ provider:
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
     TODO_ATTACHMENTS_S3_BUCKET: todo-attachments-bucket-trungvq8-${self:provider.stage}
+    SIGNED_URL_EXPIRATION: 300
 
   iam:
     role:
@@ -36,6 +37,11 @@ provider:
           Action:
             - dynamodb:Query
           Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:GetObject
+          Resource: arn:aws:s3:::${self:provider.environment.TODO_ATTACHMENTS_S3_BUCKET}/*
         - Effect: "Allow"
           Action:
             - "xray:PutTraceSegments"
