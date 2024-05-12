@@ -3,8 +3,10 @@ import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
 import {DynamoDB} from '@aws-sdk/client-dynamodb'
 import {DynamoDBDocument} from '@aws-sdk/lib-dynamodb'
+import {getUserId} from "../utils.mjs";
 
 const dynamoDbClient = DynamoDBDocument.from(new DynamoDB())
+const dynamoDbDocument = DynamoDBDocument.from(new DynamoDB())
 const todosTable = process.env.TODOS_TABLE
 
 export const handler = middy()
@@ -17,10 +19,9 @@ export const handler = middy()
   .handler(async (event) => {
       console.log('Processing event: ', event)
 
-      const scanCommand = {
-          TableName: todosTable
-      }
-      const result = await dynamoDbClient.scan(scanCommand)
+      const userId = getUserId(event)
+
+      const result = await getTodosByUserId(userId)
       const items = result.Items
 
       console.log('items', items)
@@ -31,3 +32,16 @@ export const handler = middy()
           })
       }
   })
+
+async function getTodosByUserId(userId) {
+    const result = await dynamoDbDocument.query({
+        TableName: todosTable,
+        KeyConditionExpression: 'userId = :userId',
+        ExpressionAttributeValues: {
+            ':userId': userId
+        },
+        ScanIndexForward: false
+    })
+
+    return result
+}
