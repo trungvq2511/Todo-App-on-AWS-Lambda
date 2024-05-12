@@ -28,7 +28,7 @@ export const handler = middy()
       userId: userId,
       todoId: itemId,
       ...parsedBody,
-      createdAt: dateFormat(new Date(),'dd-mm-yyyy HH:mm:ss'),
+      createdAt: getDatetime(),
       done: false
     }
 
@@ -49,3 +49,20 @@ export const handler = middy()
       })
     }
   })
+
+const getDatetime = () => {
+
+  const checkLength = function(part) {
+    return (part < 10) ? '0' + part : part;
+  };
+
+  const date = new Date(),
+    year = date.getFullYear(),
+    month = checkLength(date.getMonth()),
+    day = checkLength(date.getDay()),
+    hour = checkLength(date.getHours()),
+    minute = checkLength(date.getMinutes()),
+    second = checkLength(date.getSeconds());
+
+  return day + '-' + month + '-' + year + ' ' + hour + ':' + minute + ':' + second;
+}
