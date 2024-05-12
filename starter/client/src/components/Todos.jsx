@@ -121,10 +121,10 @@ export function Todos() {
   const [loadingTodos, setLoadingTodos] = useState(true)
   const navigate = useNavigate()
 
-  console.log('User', {
-    name: user.name,
-    email: user.email
-  })
+  // console.log('User', {
+  //   name: user.name,
+  //   email: user.email
+  // })
 
   useEffect(() => {
     async function foo() {
@@ -133,7 +133,7 @@ export function Todos() {
           audience: `https://${domain}/api/v2/`,
           scope: 'read:todos'
         })
-        console.log('Access token: ' + accessToken)
+        // console.log('Access token: ' + accessToken)
         const todos = await getTodos(accessToken)
         setTodos(todos)
         setLoadingTodos(false)
