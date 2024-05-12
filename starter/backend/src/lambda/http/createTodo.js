@@ -24,7 +24,7 @@ export const handler = middy()
     const parsedBody = JSON.parse(event.body)
     const userId = getUserId(event)
 
-    const newItem = {
+    const item = {
       userId: userId,
       todoId: itemId,
       ...parsedBody,
@@ -32,11 +32,11 @@ export const handler = middy()
       done: false
     }
 
-    console.log('newItem', newItem)
+    console.log('newItem', item)
 
     await dynamoDbClient.put({
       TableName: todosTable,
-      Item: newItem
+      Item: item
     })
 
     return {
@@ -45,7 +45,7 @@ export const handler = middy()
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        newItem
+        item
       })
     }
   })
