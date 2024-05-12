@@ -23,7 +23,7 @@ export const handler = middy()
     const parsedBody = JSON.parse(event.body)
     const userId = getUserId(event)
 
-    const item = {
+    const todo = {
       userId: userId,
       todoId: itemId,
       ...parsedBody,
@@ -31,17 +31,15 @@ export const handler = middy()
       done: false
     }
 
-    console.log('newItem', item)
-
     await dynamoDbClient.put({
       TableName: todosTable,
-      Item: item
+      Item: todo
     })
 
     return {
       statusCode: 201,
       body: JSON.stringify({
-        item
+        item: todo
       })
     }
   })

@@ -20,28 +20,20 @@ export const handler = middy()
       console.log('Processing event: ', event)
 
       const userId = getUserId(event)
+      const result = await dynamoDbDocument.query({
+          TableName: todosTable,
+          KeyConditionExpression: 'userId = :userId',
+          ExpressionAttributeValues: {
+              ':userId': userId
+          },
+          ScanIndexForward: false
+      })
+      const todos = result.Items
 
-      const result = await getTodosByUserId(userId)
-      const items = result.Items
-
-      console.log('items', items)
       return {
           statusCode: 200,
           body: JSON.stringify({
-              items
+              items: todos
           })
       }
   })
-
-async function getTodosByUserId(userId) {
-    const result = await dynamoDbDocument.query({
-        TableName: todosTable,
-        KeyConditionExpression: 'userId = :userId',
-        ExpressionAttributeValues: {
-            ':userId': userId
-        },
-        ScanIndexForward: false
-    })
-
-    return result
-}

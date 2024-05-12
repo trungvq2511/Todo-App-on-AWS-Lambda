@@ -21,8 +21,6 @@ export const handler = middy()
     const todoId = event.pathParameters.todoId
     const userId = getUserId(event)
 
-    console.log('todoId', todoId)
-
     await dynamoDbClient.delete({
       TableName: todosTable,
       Key: {
