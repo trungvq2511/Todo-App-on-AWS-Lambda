@@ -12,7 +12,7 @@ export async function getTodos(idToken) {
       }
     }
   )
-  console.log('Todos items:', response.data.items)
+  console.log('Todos:', response.data.items)
   return response.data.items
 }
 
