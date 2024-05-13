@@ -28,6 +28,20 @@ export async function createTodoAccess(todo) {
     })
 }
 
+export async function updateTodoAccess(userId, todoId, updatedTodo) {
+    await dynamoDbClient.update({
+        TableName: todosTable,
+        Key: {
+            userId,
+            todoId
+        },
+        UpdateExpression: 'set done = :done',
+        ExpressionAttributeValues: {
+            ':done': updatedTodo.done
+        },
+    })
+}
+
 export async function deleteTodoAccess(userId, todoId) {
     await dynamoDbClient.delete({
         TableName: todosTable,

@@ -1,4 +1,4 @@
-import {getTodoAccess, createTodoAccess, deleteTodoAccess} from "../dataLayer/todoAccess.js"
+import {getTodoAccess, createTodoAccess, updateTodoAccess, deleteTodoAccess} from "../dataLayer/todoAccess.js"
 import {getUserId} from "../lambda/utils.mjs";
 import {v4 as uuidv4} from "uuid";
 import dateFormat from 'dateformat';
@@ -25,6 +25,19 @@ export async function createTodoLogic(event) {
     await createTodoAccess(todo);
 
     return todo;
+}
+
+export async function updateTodoLogic(event) {
+    const userId = getUserId(event)
+    const todoId = event.pathParameters.todoId
+    const updatedTodo = JSON.parse(event.body)
+
+    await updateTodoAccess(userId, todoId, updatedTodo);
+
+    return {
+        todoId: todoId,
+        done: updatedTodo.done
+    };
 }
 
 export async function deleteTodoLogic(event) {
