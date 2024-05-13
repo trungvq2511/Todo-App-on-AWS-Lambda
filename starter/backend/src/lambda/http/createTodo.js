@@ -1,17 +1,10 @@
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
-import {DynamoDB} from '@aws-sdk/client-dynamodb'
-import {DynamoDBDocument} from '@aws-sdk/lib-dynamodb'
-import { v4 as uuidv4 } from 'uuid'
-import { getUserId } from '../utils.mjs'
-import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../../utils/logger.mjs'
-import dateFormat from 'dateformat'
+import {createTodoLogic} from '../../businessLogic/todoLogic.js'
 
 const logger = createLogger('create-todo')
-const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
-const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE
 
 export const handler = middy()
@@ -23,22 +16,8 @@ export const handler = middy()
   )
   .handler(async (event) => {
     console.log('Processing event: ', event)
-    const itemId = uuidv4()
 
-    const parsedBody = JSON.parse(event.body)
-    const userId = getUserId(event)
-    const todo = {
-      userId: userId,
-      todoId: itemId,
-      ...parsedBody,
-      createdAt: getDatetime(),
-      done: false
-    }
-
-    await dynamoDbClient.put({
-      TableName: todosTable,
-      Item: todo
-    })
+    const todo = await createTodoLogic(event);
 
     logger.info('Todo created', {
       todo: todo
@@ -52,6 +31,3 @@ export const handler = middy()
     }
   })
 
-const getDatetime = () => {
-  return dateFormat(new Date(), 'dd/mm/yyyy HH:MM:ss')
-}
