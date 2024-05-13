@@ -8,6 +8,9 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
 import AWSXRay from 'aws-xray-sdk-core'
+import { createLogger } from '../../utils/logger.mjs'
+const logger = createLogger('auth')
+
 
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
@@ -48,6 +51,10 @@ export const handler = middy()
       ExpressionAttributeValues: {
         ':attachmentUrl': `https://${attachmentsS3Bucket}.s3.amazonaws.com/${imageId}`
       },
+    })
+
+    logger.info('URL generated', {
+      uploadUrl: url
     })
 
     return {

@@ -1,6 +1,5 @@
 import jsonwebtoken from 'jsonwebtoken'
 import { createLogger } from '../../utils/logger.mjs'
-
 const logger = createLogger('auth')
 
 // const jwksUrl = 'https://${domain}/.well-known/jwks.json'
@@ -27,7 +26,10 @@ vs3WaxRrMMgKv25oBmYxb9dRJc+65+tSy+lA24ceovzp
 export async function handler(event) {
   try {
     const jwtToken = await verifyToken(event.authorizationToken)
-    console.log('User was authenticated', jwtToken)
+
+    logger.info('User was authenticated', {
+      userId: jwtToken.sub
+    })
 
     return {
       principalId: jwtToken.sub,
