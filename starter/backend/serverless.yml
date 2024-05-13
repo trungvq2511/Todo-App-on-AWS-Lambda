@@ -63,6 +63,9 @@ functions:
           method: post
           path: todos
           cors: true
+          request:
+            schemas:
+              application/json: ${file(src/models/createTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -78,6 +81,9 @@ functions:
           method: patch
           path: todos/{todoId}
           cors: true
+          request:
+            schemas:
+              application/json: ${file(src/models/updateTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
