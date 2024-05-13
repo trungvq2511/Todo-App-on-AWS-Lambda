@@ -13,3 +13,12 @@ export async function createTodoAccess(todo) {
         Item: todo
     })
 }
+export async function deleteTodoAccess(userId, todoId) {
+    await dynamoDbClient.delete({
+        TableName: todosTable,
+        Key: {
+            userId,
+            todoId
+        }
+    })
+}
