@@ -1,4 +1,3 @@
-import Axios from 'axios'
 import jsonwebtoken from 'jsonwebtoken'
 import { createLogger } from '../../utils/logger.mjs'
 
@@ -24,6 +23,7 @@ nCheqaGUky3doHMbRz2lTk70f5lXAlf5pyuLj82Iy6K3iZB9stGiMpNoBZRK4Sw7
 0NuYI/apuVir0TSyaKhXVmLU0OcLI7upPORC9k1LI6oRuWEX5EFRcykgnyqUc/3Y
 vs3WaxRrMMgKv25oBmYxb9dRJc+65+tSy+lA24ceovzp
 -----END CERTIFICATE-----`;
+
 export async function handler(event) {
   try {
     const jwtToken = await verifyToken(event.authorizationToken)

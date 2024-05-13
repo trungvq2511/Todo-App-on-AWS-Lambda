@@ -7,8 +7,10 @@ import {getUserId} from "../utils.mjs";
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
+import AWSXRay from 'aws-xray-sdk-core'
 
-const dynamoDbClient = DynamoDBDocument.from(new DynamoDB())
+const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
+const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE
 const attachmentsS3Bucket = process.env.TODO_ATTACHMENTS_S3_BUCKET
 const urlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION)
@@ -26,7 +28,6 @@ export const handler = middy()
 
     const userId = getUserId(event)
     const todoId = event.pathParameters.todoId
-    // const updatedTodo = JSON.parse(event.body)
     const imageId = uuidv4();
 
     const command = new PutObjectCommand({
