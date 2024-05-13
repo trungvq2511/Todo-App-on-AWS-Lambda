@@ -1,4 +1,4 @@
-import { Auth0Provider } from '@auth0/auth0-react'
+import {Auth0Provider} from '@auth0/auth0-react'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import 'semantic-ui-css/semantic.min.css'
@@ -15,7 +15,7 @@ ReactDOM.render(
     audience={`https://${domain}/api/v2/`}
     scope="read:todo write:todo delete:todo"
   >
-    <App />
+      <App/>
   </Auth0Provider>,
   document.getElementById('root')
 )
