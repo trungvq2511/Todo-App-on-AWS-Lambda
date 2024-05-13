@@ -122,8 +122,7 @@ functions:
       - Effect: Allow
         Action:
           - s3:PutObject
-          - s3:GetObject
-        Resource: !GetAtt AttachmentsBucket.Arn
+        Resource: arn:aws:s3:::${self:provider.environment.TODO_ATTACHMENTS_S3_BUCKET}/*
 resources:
   Resources:
     # TODO: Add any necessary AWS resources
