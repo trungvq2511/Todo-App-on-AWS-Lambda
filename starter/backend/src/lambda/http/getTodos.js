@@ -27,7 +27,8 @@ export const handler = middy()
           ExpressionAttributeValues: {
               ':userId': userId
           },
-          ScanIndexForward: false
+          //sort index desc
+          ScanIndexForward: true
       })
       const todos = result.Items
 

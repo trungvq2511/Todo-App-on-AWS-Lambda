@@ -7,8 +7,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { getUserId } from '../utils.mjs'
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../../utils/logger.mjs'
-const logger = createLogger('create-todo')
+import dateFormat from 'dateformat'
 
+const logger = createLogger('create-todo')
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE
@@ -26,7 +27,6 @@ export const handler = middy()
 
     const parsedBody = JSON.parse(event.body)
     const userId = getUserId(event)
-
     const todo = {
       userId: userId,
       todoId: itemId,
@@ -53,18 +53,5 @@ export const handler = middy()
   })
 
 const getDatetime = () => {
-
-  const checkLength = function(part) {
-    return (part < 10) ? '0' + part : part;
-  };
-
-  const date = new Date(),
-    year = date.getFullYear(),
-    month = checkLength(date.getMonth()),
-    day = checkLength(date.getDay()),
-    hour = checkLength(date.getHours()),
-    minute = checkLength(date.getMinutes()),
-    second = checkLength(date.getSeconds());
-
-  return day + '-' + month + '-' + year + ' ' + hour + ':' + minute + ':' + second;
+  return dateFormat(new Date(), 'dd/mm/yyyy HH:MM:ss')
 }

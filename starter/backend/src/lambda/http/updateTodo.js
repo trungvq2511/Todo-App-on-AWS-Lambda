@@ -6,8 +6,8 @@ import {DynamoDB} from "@aws-sdk/client-dynamodb";
 import {getUserId} from "../utils.mjs";
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../../utils/logger.mjs'
-const logger = createLogger('update-todo')
 
+const logger = createLogger('update-todo')
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE

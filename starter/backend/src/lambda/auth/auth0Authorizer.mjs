@@ -1,8 +1,8 @@
 import jsonwebtoken from 'jsonwebtoken'
 import { createLogger } from '../../utils/logger.mjs'
-const logger = createLogger('auth')
 
 // const jwksUrl = 'https://${domain}/.well-known/jwks.json'
+const logger = createLogger('auth')
 const certificate = `-----BEGIN CERTIFICATE-----
 MIIDHTCCAgWgAwIBAgIJeXIDal4QnCrQMA0GCSqGSIb3DQEBCwUAMCwxKjAoBgNV
 BAMTIWRldi12eW5pMHZsM2V4Z3BiMmVuLnVzLmF1dGgwLmNvbTAeFw0yNDA1MDgw

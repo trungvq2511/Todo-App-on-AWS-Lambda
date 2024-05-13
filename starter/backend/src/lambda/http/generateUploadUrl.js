@@ -9,9 +9,8 @@ import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { v4 as uuidv4 } from 'uuid'
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../../utils/logger.mjs'
+
 const logger = createLogger('generate-url')
-
-
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE

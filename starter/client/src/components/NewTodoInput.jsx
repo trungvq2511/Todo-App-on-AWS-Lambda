@@ -54,17 +54,7 @@ export function NewTodoInput({ onNewTodo }) {
 }
 
 function calculateDueDate() {
-    const checkLength = function(part) {
-        return (part < 10) ? '0' + part : part;
-    };
-
-    const date = new Date(),
-      year = date.getFullYear(),
-      month = checkLength(date.getMonth()),
-      day = checkLength(date.getDay() + 7),
-      hour = checkLength(date.getHours()),
-      minute = checkLength(date.getMinutes()),
-      second = checkLength(date.getSeconds());
-
-    return day + '-' + month + '-' + year + ' ' + hour + ':' + minute + ':' + second;
+    const date = new Date();
+    const dueDate = date.setDate(date.getDate() + 7)
+    return dateFormat(dueDate, 'dd/mm/yyyy HH:MM:ss')
 }
