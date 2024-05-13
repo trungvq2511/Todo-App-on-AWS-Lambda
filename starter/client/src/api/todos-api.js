@@ -67,5 +67,7 @@ export async function getUploadUrl(idToken, todoId) {
 }
 
 export async function uploadFile(uploadUrl, file) {
+    console.log(uploadUrl)
+    console.log(file)
   await Axios.put(uploadUrl, file)
 }

@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { getUserId } from '../utils.mjs'
 import AWSXRay from 'aws-xray-sdk-core'
 import { createLogger } from '../../utils/logger.mjs'
-const logger = createLogger('auth')
+const logger = createLogger('create-todo')
 
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
