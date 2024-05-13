@@ -65,7 +65,7 @@ functions:
           cors: true
           request:
             schemas:
-              application/json: ${file(src/models/createTodoRequest.json)}
+              application/json: ${file(src/schemas/createTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -83,7 +83,7 @@ functions:
           cors: true
           request:
             schemas:
-              application/json: ${file(src/models/updateTodoRequest.json)}
+              application/json: ${file(src/schemas/updateTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
