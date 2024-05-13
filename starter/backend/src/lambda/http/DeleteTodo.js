@@ -1,8 +1,8 @@
 import middy from "@middy/core";
 import httpErrorHandler from "@middy/http-error-handler";
 import cors from "@middy/http-cors";
-import {createLogger} from '../../utils/logger.mjs'
-import {deleteTodoLogic} from "../../businessLogic/todoLogic.js";
+import {createLogger} from '../../logger/LoggerUtils.mjs'
+import {deleteTodoLogic} from "../../business-logic/TodoLogic.js";
 
 const logger = createLogger('delete-todo')
 

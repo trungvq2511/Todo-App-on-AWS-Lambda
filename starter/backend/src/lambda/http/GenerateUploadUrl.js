@@ -1,10 +1,10 @@
 import middy from "@middy/core";
 import httpErrorHandler from "@middy/http-error-handler";
 import cors from "@middy/http-cors";
-import { createLogger } from '../../utils/logger.mjs'
-import {updateTodoLogic} from "../../businessLogic/todoLogic.js";
+import { createLogger } from '../../logger/LoggerUtils.mjs'
+import {addAttachMentLogic} from "../../business-logic/TodoLogic.js";
 
-const logger = createLogger('update-todo')
+const logger = createLogger('generate-url')
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -16,14 +16,16 @@ export const handler = middy()
   .handler(async (event) => {
     console.log('Processing event: ', event)
 
-    const updatedTodo = await updateTodoLogic(event);
+    const url = await addAttachMentLogic(event);
 
-    logger.info('Todo updated', {
-      updatedTodo
+    logger.info('URL generated', {
+      uploadUrl: url
     })
 
     return {
       statusCode: 200,
-      body: 'Update todo successfully'
+      body: JSON.stringify({
+        uploadUrl: url
+      })
     }
   })

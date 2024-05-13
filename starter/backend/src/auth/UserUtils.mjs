@@ -1,4 +1,4 @@
-import { parseUserId } from '../auth/utils.mjs'
+import {decode} from "jsonwebtoken";
 
 export function getUserId(event) {
   const authorization = event.headers.Authorization
@@ -6,4 +6,9 @@ export function getUserId(event) {
   const jwtToken = split[1]
 
   return parseUserId(jwtToken)
+}
+
+function parseUserId(jwtToken) {
+  const decodedJwt = decode(jwtToken)
+  return decodedJwt.sub
 }

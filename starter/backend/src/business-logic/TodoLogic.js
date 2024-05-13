@@ -1,5 +1,6 @@
-import {getTodoAccess, createTodoAccess, updateTodoAccess, deleteTodoAccess} from "../dataLayer/todoAccess.js"
-import {getUserId} from "../lambda/utils.mjs";
+import {getTodoAccess, createTodoAccess, updateTodoAccess, updateTodoAttachmentUrlAccess, deleteTodoAccess} from "../data-layer/TodoAccess.js"
+import {addAttachmentToS3} from "../file-storage/AttachmentUtils.js"
+import {getUserId} from "../auth/UserUtils.mjs";
 import {v4 as uuidv4} from "uuid";
 import dateFormat from 'dateformat';
 
@@ -25,6 +26,17 @@ export async function createTodoLogic(event) {
     await createTodoAccess(todo);
 
     return todo;
+}
+
+export async function addAttachMentLogic(event) {
+    const userId = getUserId(event)
+    const todoId = event.pathParameters.todoId
+    const imageId = uuidv4();
+
+    const url = await addAttachmentToS3(imageId);
+    await updateTodoAttachmentUrlAccess(userId, todoId, imageId);
+
+    return url;
 }
 
 export async function updateTodoLogic(event) {

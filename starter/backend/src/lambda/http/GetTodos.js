@@ -1,7 +1,7 @@
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
-import {getTodoLogic} from '../../businessLogic/todoLogic.js'
+import {getTodoLogic} from '../../business-logic/TodoLogic.js'
 
 export const handler = middy()
   .use(httpErrorHandler())

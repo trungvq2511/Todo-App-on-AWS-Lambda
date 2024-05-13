@@ -7,6 +7,7 @@ const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 
 const todosTable = process.env.TODOS_TABLE
 const todosIndex = process.env.TODOS_CREATED_AT_INDEX
+const attachmentsS3Bucket = process.env.TODO_ATTACHMENTS_S3_BUCKET
 
 export async function getTodoAccess(userId) {
     return await dynamoDbClient.query({
@@ -38,6 +39,20 @@ export async function updateTodoAccess(userId, todoId, updatedTodo) {
         UpdateExpression: 'set done = :done',
         ExpressionAttributeValues: {
             ':done': updatedTodo.done
+        },
+    })
+}
+
+export async function updateTodoAttachmentUrlAccess(userId, todoId, imageId) {
+    await dynamoDbClient.update({
+        TableName: todosTable,
+        Key: {
+            userId,
+            todoId
+        },
+        UpdateExpression: 'set attachmentUrl = :attachmentUrl',
+        ExpressionAttributeValues: {
+            ':attachmentUrl': `https://${attachmentsS3Bucket}.s3.amazonaws.com/${imageId}`
         },
     })
 }

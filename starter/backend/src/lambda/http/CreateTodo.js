@@ -1,8 +1,8 @@
 import middy from '@middy/core'
 import cors from '@middy/http-cors'
 import httpErrorHandler from '@middy/http-error-handler'
-import { createLogger } from '../../utils/logger.mjs'
-import {createTodoLogic} from '../../businessLogic/todoLogic.js'
+import { createLogger } from '../../logger/LoggerUtils.mjs'
+import {createTodoLogic} from '../../business-logic/TodoLogic.js'
 
 const logger = createLogger('create-todo')
 const todosTable = process.env.TODOS_TABLE

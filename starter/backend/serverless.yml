@@ -33,11 +33,11 @@ provider:
 
 functions:
   Auth:
-    handler: src/lambda/auth/auth0Authorizer.handler
+    handler: src/lambda/auth/Auth0Authorizer.handler
 
   # TODO: Configure this function
   GetTodos:
-    handler: src/lambda/http/getTodos.handler
+    handler: src/lambda/http/GetTodos.handler
     events:
       - http:
           authorizer: Auth
@@ -56,7 +56,7 @@ functions:
 
   # TODO: Configure this function
   CreateTodo:
-    handler: src/lambda/http/createTodo.handler
+    handler: src/lambda/http/CreateTodo.handler
     events:
       - http:
           authorizer: Auth
@@ -65,7 +65,7 @@ functions:
           cors: true
           request:
             schemas:
-              application/json: ${file(src/schemas/createTodoRequest.json)}
+              application/json: ${file(src/schemas/CreateTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -74,7 +74,7 @@ functions:
 
   # TODO: Configure this function
   UpdateTodo:
-    handler: src/lambda/http/updateTodo.handler
+    handler: src/lambda/http/UpdateTodo.handler
     events:
       - http:
           authorizer: Auth
@@ -83,7 +83,7 @@ functions:
           cors: true
           request:
             schemas:
-              application/json: ${file(src/schemas/updateTodoRequest.json)}
+              application/json: ${file(src/schemas/UpdateTodoRequest.json)}
     iamRoleStatements:
       - Effect: Allow
         Action:
@@ -92,7 +92,7 @@ functions:
 
   # TODO: Configure this function
   DeleteTodo:
-    handler: src/lambda/http/deleteTodo.handler
+    handler: src/lambda/http/DeleteTodo.handler
     events:
       - http:
           authorizer: Auth
@@ -107,7 +107,7 @@ functions:
 
   # TODO: Configure this function
   GenerateUploadUrl:
-    handler: src/lambda/http/generateUploadUrl.handler
+    handler: src/lambda/http/GenerateUploadUrl.handler
     events:
       - http:
           authorizer: Auth

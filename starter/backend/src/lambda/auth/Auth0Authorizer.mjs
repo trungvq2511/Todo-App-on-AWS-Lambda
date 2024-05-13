@@ -1,5 +1,5 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { createLogger } from '../../utils/logger.mjs'
+import { createLogger } from '../../logger/LoggerUtils.mjs'
 
 // const jwksUrl = 'https://${domain}/.well-known/jwks.json'
 const logger = createLogger('auth')
