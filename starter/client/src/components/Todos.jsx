@@ -148,7 +148,7 @@ export function Todos() {
     <div>
       <Header as="h1">TODOs</Header>
 
-      <NewTodoInput onNewTodo={(newTodo) => setTodos([...todos, newTodo])} />
+      <NewTodoInput onNewTodo={(newTodo) => setTodos([ newTodo, ...todos])} />
 
       {renderTodos(loadingTodos, todos)}
     </div>

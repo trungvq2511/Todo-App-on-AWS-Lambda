@@ -3,25 +3,7 @@ import { createLogger } from '../../logger/LoggerUtils.mjs'
 
 // const jwksUrl = 'https://${domain}/.well-known/jwks.json'
 const logger = createLogger('auth')
-const certificate = `-----BEGIN CERTIFICATE-----
-MIIDHTCCAgWgAwIBAgIJeXIDal4QnCrQMA0GCSqGSIb3DQEBCwUAMCwxKjAoBgNV
-BAMTIWRldi12eW5pMHZsM2V4Z3BiMmVuLnVzLmF1dGgwLmNvbTAeFw0yNDA1MDgw
-OTQ1MzNaFw0zODAxMTUwOTQ1MzNaMCwxKjAoBgNVBAMTIWRldi12eW5pMHZsM2V4
-Z3BiMmVuLnVzLmF1dGgwLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
-ggEBAMngHPwd2gkT+jnQmGnk/Rb8qr1D0dit5iEev2G9ZnduiqgjVtpb+2nRoVOL
-WXkG4tMOkxYQHwWeAQAscntZ5PSMWYVDl2E900CFmPMwwp7xKnZRt439lgL3EyNf
-R45NMqoD/Wl/NmCaFkQ9KiMqkPJ7LUZlUZ8DlHIrPZw3UyeD0VXuSB2M007NCXt5
-5iiFrfOr9lHF5etee1UhxM7/LKrddHv61q+eZL9kayzWASbrcjQ/e9E34TQYo/sE
-p6Ybm0sJEmkGJjCJ4cdzJlfT2c4hdlr0QznN4HaYoxwy7rNmHa90bh7JrnrsoA7h
-n+47wWcKIE7+7FrfNiequf80aCcCAwEAAaNCMEAwDwYDVR0TAQH/BAUwAwEB/zAd
-BgNVHQ4EFgQUxGIP3IT86lizxeMkTauwJf+MeEAwDgYDVR0PAQH/BAQDAgKEMA0G
-CSqGSIb3DQEBCwUAA4IBAQC/SFVxWLs+BDA4j7jxe60uIRVGN3clMXqML8Bd2uro
-7idT83NVnOFtMQNvF6TbqcySGcP3opY0e0cB81sCdnj+kIBFqESq4M/8ehKlZ9Ms
-weSzOpvFyPPMLd9BQ+YHJBygOc+oCxbssDnJF4Ke5rmvo8BaxVuJuH00Syag5qcI
-nCheqaGUky3doHMbRz2lTk70f5lXAlf5pyuLj82Iy6K3iZB9stGiMpNoBZRK4Sw7
-0NuYI/apuVir0TSyaKhXVmLU0OcLI7upPORC9k1LI6oRuWEX5EFRcykgnyqUc/3Y
-vs3WaxRrMMgKv25oBmYxb9dRJc+65+tSy+lA24ceovzp
------END CERTIFICATE-----`;
+const certificate = process.env.AUTH0_CERTIFICATE;
 
 export async function handler(event) {
   try {
