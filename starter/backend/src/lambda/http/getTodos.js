@@ -9,6 +9,7 @@ import AWSXRay from 'aws-xray-sdk-core'
 const dynamoDbXRay = AWSXRay.captureAWSv3Client(new DynamoDB())
 const dynamoDbClient = DynamoDBDocument.from(dynamoDbXRay)
 const todosTable = process.env.TODOS_TABLE
+const todosIndex = process.env.TODOS_CREATED_AT_INDEX
 
 export const handler = middy()
   .use(httpErrorHandler())
@@ -27,8 +28,9 @@ export const handler = middy()
           ExpressionAttributeValues: {
               ':userId': userId
           },
-          //sort index desc
-          ScanIndexForward: true
+          //sort by LocalSecondaryIndexes desc (false)
+          IndexName: todosIndex,
+          ScanIndexForward: false
       })
       const todos = result.Items
 
